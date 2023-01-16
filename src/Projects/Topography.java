@@ -19,12 +19,29 @@ public class Topography {
         int papersCount = booksCount * pagesInBook / 2;
         int inkedPapersCount = papersCount + booksCount;
 
-        boolean printRollerTempForPrinting = printRollerMinTemp < printRollerTemp && printRollerTemp < printRollerMaxTemp;
+        boolean printRollerTempForPrinting = printRollerMinTemp <= printRollerTemp && printRollerTemp <= printRollerMaxTemp;
         boolean paperIsEnough = papersCount <= paperReserve;
         boolean inkIsEnough = inkedPapersCount <= inkReserve;
         boolean coversAreEnough = booksCount <= coverReserve;
 
-        if ( paperIsEnough && inkIsEnough && coversAreEnough && (coldPrintingMode || printRollerTempForPrinting)) {
+        boolean errors = false;
+
+        if (!paperIsEnough || !inkIsEnough) {
+            errors = true;
+            System.out.println("Бумаги или чернил недостаточно");
+        } else {
+            if (coversAreEnough) {
+                if (!coldPrintingMode && !printRollerTempForPrinting) {
+                    errors = true;
+                    System.out.println("Неверный режим печати или температуры печатающего ролла недопустимая");
+            } else {
+                errors = true;
+                System.out.println("Обложек недостаточно");
+                }
+            }
+        }
+
+        if (!errors) {
             System.out.println("Печать разрешена");
         } else {
             System.out.println("Печать запрещена");
