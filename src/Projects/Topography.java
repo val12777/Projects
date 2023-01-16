@@ -11,7 +11,7 @@ public class Topography {
         double printRollerMaxTemp = 120.75;
 
         int pagesInBook = 530;
-        int booksCount = 2000;
+        int booksCount = 2001;
 
         boolean coldPrintingMode = false;
         double printRollerTemp = 90;
@@ -20,8 +20,11 @@ public class Topography {
         int inkedPapersCount = papersCount + booksCount;
 
         boolean printRollerTempForPrinting = printRollerMinTemp < printRollerTemp && printRollerTemp < printRollerMaxTemp;
+        boolean paperIsEnough = papersCount <= paperReserve;
+        boolean inkIsEnough = inkedPapersCount <= inkReserve;
+        boolean coversAreEnough = booksCount <= coverReserve;
 
-        if (papersCount <= paperReserve && inkedPapersCount <= inkReserve && booksCount <= coverReserve   && (coldPrintingMode || printRollerTempForPrinting)) {
+        if ( paperIsEnough && inkIsEnough && coversAreEnough && (coldPrintingMode || printRollerTempForPrinting)) {
             System.out.println("Печать разрешена");
         } else {
             System.out.println("Печать запрещена");
